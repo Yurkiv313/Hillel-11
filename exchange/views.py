@@ -33,7 +33,13 @@ def exchange_rate(request):
         results = Rate.objects.filter(
             currency_from=from_currency, currency_to=to_currency
         ).order_by("buy")
-        result = results[0]
+        result = (
+            Rate.objects.filter(currency_from=from_currency, currency_to=to_currency)
+            .order_by("buy")
+            .first()
+        )
+        if result is None:
+            return HttpResponse("ERROR")
         rate = result.buy if result.currency_from == from_currency else result.sell
         amount_in_to_currency = amount * float(rate)
         return render(

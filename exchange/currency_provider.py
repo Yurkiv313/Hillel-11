@@ -125,26 +125,4 @@ class NBUProvider(ProviderBase):
         )
 
 
-# class MinFinProvider(ProviderBase):
-#     name = 'minfin'
-#
-#     def get_rate(self) -> SellBuy:
-#         url = "https://api.minfin.com.ua/mb/25eaaab96d5319587d8a085786f386cff1561ad7/"
-#         response = requests.get(url)
-#         response.raise_for_status()
-#
-#         for currency in response.json():
-#             if self.currency_from == "USD":
-#                 # currency["currency"] == 'usd'
-#                 currency = currency["usd"]
-#             elif self.currency_from == "EUR":
-#                 currency = currency["eur"]
-#             if currency["currency"] == self.currency_from:
-#                 value = SellBuy(sell=float(currency["ask"]), buy=float(currency["bid"]))
-#                 return value
-#             raise RateNotFound(
-#                 f"Cannot find rate from {self.currency_from} to {self.currency_to} in provider {self.name}"
-#             )
-
-
 PROVIDERS = [MonoProvider, PrivatbankProvider, VkurseProvider, NBUProvider]
