@@ -19,4 +19,4 @@ from django.urls import path
 
 from exchange.views import exchange_rate
 
-urlpatterns = [path("admin/", admin.site.urls), path("exchange-rates", exchange_rate)]
+urlpatterns = [path("admin/", admin.site.urls), path("", exchange_rate)]

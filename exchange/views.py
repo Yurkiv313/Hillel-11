@@ -1,7 +1,7 @@
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 
-
+from exchange.forms import RateForm
 from exchange.models import Rate
 
 
@@ -24,8 +24,10 @@ def main_view(request):
 
 
 def exchange_rate(request):
+    form = RateForm(request.POST or None)
+
     if request.method == "GET":
-        return render(request, "exchange_rate.html")
+        return render(request, "exchange_rate.html", {"form": form})
     if request.method == "POST":
         amount = float(request.POST["amount"])
         from_currency = request.POST["from_currency"]
@@ -42,10 +44,12 @@ def exchange_rate(request):
             return HttpResponse("ERROR")
         rate = result.buy if result.currency_from == from_currency else result.sell
         amount_in_to_currency = amount * float(rate)
+
         return render(
             request,
             "exchange_rate.html",
             {
+                "form": form,
                 "amount_in_to_currency": amount_in_to_currency,
                 "amount": amount,
                 "from_currency": from_currency,

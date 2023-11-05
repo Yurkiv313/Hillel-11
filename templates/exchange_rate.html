@@ -1,0 +1,52 @@
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+<style>
+    body{
+        background-color: antiquewhite;
+    }
+</style>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+
+        <div class="container-fluid d-flex align-items-center justify-content-center">
+            <div class="row">
+                <div class="col-12">
+                    <ul class="d-flex align-items-center">
+                        <label for="amount">Кількість:</label>
+                        <input type="number" id="amount" name="amount" required>
+                        <label for="from_currency">З валюти:</label>
+                        <select id="from_currency" name="from_currency" required>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                        </select>
+                        <label for="to_currency">У валюту:</label>
+                        <select id="to_currency" name="to_currency" required>
+                            <option value="UAH">UAH</option>
+                            <option value="EUR">EUR</option>
+                        </select>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            {% buttons %}
+            <button type="submit" class="btn btn-primary ms-auto" value="Обміняти">
+              Submit
+            </button>
+            {% endbuttons %}
+        </div>
+    </form>
+    {% if amount_in_to_currency %}
+        <p>Кількість {{ amount }} {{ from_currency }} у {{ to_currency }} становить {{ amount_in_to_currency }}</p>
+    {% endif %}
+</body>
